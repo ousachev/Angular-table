@@ -1,1 +1,24 @@
-/* You can add global styles to this file, and also import other style files */
+* {
+  box-sizing: border-box;
+}
+
+tr {
+  width: 100%;
+  display: flex;
+}
+
+td {
+  width: 25%;
+  padding: 5px 0;
+  border: 1px solid black;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+
+  &:nth-child(3){
+    width: inherit;
+  }
+}

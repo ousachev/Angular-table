@@ -1,0 +1,49 @@
+<div class="searchWrapper">
+  <label htmlFor="search">
+    Что будем искать?
+    <input id="search"
+           [value]="search"
+           (input)="onChange($event)"
+           class="form-control"
+           type="text">
+  </label>
+</div>
+<table class="table">
+  <thead>
+  <tr>
+    <td *ngFor="let cell of cells; let i = index" [ngClass]="{'active' : activeSort === cell.value}">
+      <button [id]="cell.value" (click)="sortHandler(i)">
+        <span class="sort">{{cell.title}}</span>
+        <div>
+          <div class="sortUp" [ngClass]="{'blue' : sortDir === 'up'}"></div>
+          <div class="sortDown" [ngClass]="{'blue' : sortDir === 'down'}"></div>
+        </div>
+      </button>
+    </td>
+  </tr>
+  </thead>
+  <tbody *ngIf="loading;else loader">
+  <tr
+    *ngFor="let post of filteredPosts | filter:search , let i = index "
+  >
+    <td>{{post.author}}</td>
+    <td>{{post.city}}</td>
+    <td>
+      <a (click)="toggleModal(i)" class="title"> {{post.title}}</a>
+    </td>
+    <td>{{post.comments.length}}</td>
+  </tr>
+
+  </tbody>
+  <ng-template #loader>
+    <tbody class="loader">
+    <div class="lds-hourglass"></div>
+    </tbody>
+  </ng-template>
+</table>
+
+<app-modal
+  *ngIf="isModal"
+  [activePost]="filteredPosts[this.activePost]"
+  (modalHandler)="toggleModal()"
+></app-modal>
